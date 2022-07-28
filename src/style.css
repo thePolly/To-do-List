@@ -1,0 +1,7 @@
+
+html {
+    background-color: antiquewhite;
+}
+input[type=checkbox]:checked + span {
+    text-decoration: line-through;
+}

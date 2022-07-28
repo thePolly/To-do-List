@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<h1>To-Do List</h1>
+<input id="input-task">
+<button id="add-task-button">Add task</button>
+<ul id="task-list">
+  </ul>
+<script>
+
+    let todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
+    let list =document.getElementById("task-list");
+    console.log(todoItems);
+
+    for(x in todoItems){
+        renderTodo([todoItems[x].name, todoItems[x].id, todoItems[x].checked]);
+    }
+
+
+
+    function addTodo(text) {
+        let id = String(Date.now())
+        todoItems.push({
+            name: text,
+            checked: false,
+            id: id
+        });
+        localStorage.setItem('todoItems', JSON.stringify(todoItems));
+        console.log("id "+id)
+        renderTodo([text, id, false]);
+    }
+
+    function renderTodo([todo, id, checked]) {
+        // Select the first element with a class of task
+        let task_list = document.getElementById("task-list");
+        // Create an `li` element and assign it to `node`
+        let node = document.createElement("li");
+        node.setAttribute("id", id);
+
+        let span = document.createElement("span");
+        span.setAttribute("class", "task");
+        span.appendChild(document.createTextNode(todo));
+
+
+        let input = document.createElement("input");
+        input.setAttribute("type", "checkbox");
+        if (checked) {
+            span.style.textDecoration="line-through";
+            input.checked="true";
+        }
+        else {
+
+        }
+        input.addEventListener("change", function (){
+            if (this.checked) {
+                console.log("Checkbox is checked..");
+                let  index = todoItems.findIndex((item) => item.id === id)
+                console.log(index)
+                todoItems[index]={
+                    name: todo,
+                    checked: true,
+                    id: id
+                };
+            } else {
+                span.style.textDecoration="none";
+                console.log("Checkbox is not checked..");
+                let  index = todoItems.findIndex((item) => item.id === id)
+                console.log(index)
+                todoItems[index]={
+                    name: todo,
+                    checked: false,
+                    id: id
+                };
+            }
+            localStorage.setItem('todoItems', JSON.stringify(todoItems))
+        });
+        node.appendChild(input);
+        node.appendChild(span);
+
+        let button = document.createElement("button");
+        button.setAttribute("class", "delete-btn");
+        button.appendChild(document.createTextNode("Delete"));
+        button.addEventListener("click", function (){
+            todoItems = todoItems.filter(
+                function (value, index, arr){
+                    console.log(value.id)
+                    console.log(node.id)
+                    if (value.id!=node.id){
+                        return value;
+                    }
+                });
+
+            localStorage.setItem('todoItems', JSON.stringify(todoItems))
+
+            node.parentNode.removeChild(node);
+        })
+        node.appendChild(button);
+        task_list.appendChild(node);
+    }
+
+
+
+    let add_task_button = document.getElementById("add-task-button");
+    add_task_button.onclick = function () {
+        let input_task = document.getElementById("input-task");
+        const text = input_task.value.trim();
+        if (text !== '') {
+            addTodo(text);
+            input_task.value="";
+        }
+    };
+</script>
+</body>
+</html>
