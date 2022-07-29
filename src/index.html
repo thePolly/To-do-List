@@ -4,116 +4,55 @@
     <meta charset="UTF-8">
     <title>To-Do List</title>
     <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Epilogue:wght@200;400&&display=swap" rel="stylesheet">
+
 </head>
-<body>
-<h1>To-Do List</h1>
-<input id="input-task">
-<button id="add-task-button">Add task</button>
-<ul id="task-list">
-  </ul>
-<script>
-
-    let todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-    let list =document.getElementById("task-list");
-    console.log(todoItems);
-
-    for(x in todoItems){
-        renderTodo([todoItems[x].name, todoItems[x].id, todoItems[x].checked]);
-    }
+<body id="bootstrap-overrides">
 
 
+<div class="row main">
 
-    function addTodo(text) {
-        let id = String(Date.now())
-        todoItems.push({
-            name: text,
-            checked: false,
-            id: id
-        });
-        localStorage.setItem('todoItems', JSON.stringify(todoItems));
-        console.log("id "+id)
-        renderTodo([text, id, false]);
-    }
+    <div class="col-md-3 col-1">
+    </div>
+    <div class="col" class="col-10 col-md-6 ">
+        <div id="number-of-done-todos">123</div>
+        <div class="mid ">
+            <div class="title-element col-12">
+                <h1>To-Do List</h1>
+            </div>
+            <input class="form-control" aria-label="Large" id="input-task" placeholder="Name of the task...">
+           <div class="row align-items-start">
+               <div class="col">
 
-    function renderTodo([todo, id, checked]) {
-        // Select the first element with a class of task
-        let task_list = document.getElementById("task-list");
-        // Create an `li` element and assign it to `node`
-        let node = document.createElement("li");
-        node.setAttribute("id", id);
+               </div>
+               <div id ="add-task-button-container" class="col">
+                   <button class="btn btn-primary btn-lg"
+                           id="add-task-button"> Add task
+                   </button>
+               </div>
+               <div class="col">
 
-        let span = document.createElement("span");
-        span.setAttribute("class", "task");
-        span.appendChild(document.createTextNode(todo));
+               </div>
 
+           </div>
 
-        let input = document.createElement("input");
-        input.setAttribute("type", "checkbox");
-        if (checked) {
-            span.style.textDecoration="line-through";
-            input.checked="true";
-        }
-        else {
+            <ul id="task-list">
+            </ul>
 
-        }
-        input.addEventListener("change", function (){
-            if (this.checked) {
-                console.log("Checkbox is checked..");
-                let  index = todoItems.findIndex((item) => item.id === id)
-                console.log(index)
-                todoItems[index]={
-                    name: todo,
-                    checked: true,
-                    id: id
-                };
-            } else {
-                span.style.textDecoration="none";
-                console.log("Checkbox is not checked..");
-                let  index = todoItems.findIndex((item) => item.id === id)
-                console.log(index)
-                todoItems[index]={
-                    name: todo,
-                    checked: false,
-                    id: id
-                };
-            }
-            localStorage.setItem('todoItems', JSON.stringify(todoItems))
-        });
-        node.appendChild(input);
-        node.appendChild(span);
+        </div>
+    </div>
+    <div class="col-1 col-md-3 ">
+    </div>
 
-        let button = document.createElement("button");
-        button.setAttribute("class", "delete-btn");
-        button.appendChild(document.createTextNode("Delete"));
-        button.addEventListener("click", function (){
-            todoItems = todoItems.filter(
-                function (value, index, arr){
-                    console.log(value.id)
-                    console.log(node.id)
-                    if (value.id!=node.id){
-                        return value;
-                    }
-                });
-
-            localStorage.setItem('todoItems', JSON.stringify(todoItems))
-
-            node.parentNode.removeChild(node);
-        })
-        node.appendChild(button);
-        task_list.appendChild(node);
-    }
+</div>
 
 
-
-    let add_task_button = document.getElementById("add-task-button");
-    add_task_button.onclick = function () {
-        let input_task = document.getElementById("input-task");
-        const text = input_task.value.trim();
-        if (text !== '') {
-            addTodo(text);
-            input_task.value="";
-        }
-    };
-</script>
+<script src="script.js"></script>
 </body>
 </html>

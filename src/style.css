@@ -1,7 +1,71 @@
 
-html {
-    background-color: antiquewhite;
+body{
+
 }
-input[type=checkbox]:checked + span {
-    text-decoration: line-through;
+
+
+#add-task-button{
+    width: 40%;
+    margin: 3rem auto;
+    min-width: 150px;
+}
+
+#add-task-button-container{
+    text-align: center;
+}
+
+.title-element {
+    padding: 3rem 0;
+    text-align: center;
+    vertical-align: center;
+    font-family: 'Bakbak One', serif;
+}
+
+span{
+    margin-left: 3rem;
+}
+
+input{
+margin-left: 2rem;
+size: 100px 100px;
+    display: none;
+}
+
+#bootstrap-overrides body {
+    background-color: #84a884;
+}
+
+.mid {
+    margin: 2rem;
+    padding: 2rem;
+    font-family: 'Epilogue', sans-serif;
+    text-space: 1px;
+
+}
+#task-list {
+    list-style-type: none;
+    padding: 0;
+}
+li{
+    margin: 0.5rem;
+    padding: .5rem;
+    border: 1px solid #d7d6d6;
+    border-radius: 1rem;
+}
+
+li:hover{
+    background-color: #c0c0c0;
+    transition: background-color 1000ms ;
+}
+
+.container1 {
+    display: flex;
+    flex: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+#number-of-done-todos{
+    font-family: 'Epilogue', sans-serif;
+    text-align: end;
+    margin: 2rem 2rem;
 }
